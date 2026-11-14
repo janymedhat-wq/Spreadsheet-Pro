@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spreadsheet Pro – The Excel alternative</title>
+<meta name="description" content="Free, open source, and always yours. An Excel alternative.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--fg:#000;--sub:#7a7a7a;--muted:#9a9a9a;--panel:#eee;--line:#e2e2e2;--accent:#1d6f42;--btn:#000;--btnfg:#fff;--bd:#dcdcdc;--li:#333}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111;--fg:#f4f4f4;--sub:#a0a0a0;--muted:#8a8a8a;--panel:#1b1b1b;--line:#2c2c2c;--accent:#4cc08a;--btn:#f4f4f4;--btnfg:#111;--bd:#3a3a3a;--li:#ddd}}
+:root[data-theme="dark"]{--bg:#111;--fg:#f4f4f4;--sub:#a0a0a0;--muted:#8a8a8a;--panel:#1b1b1b;--line:#2c2c2c;--accent:#4cc08a;--btn:#f4f4f4;--btnfg:#111;--bd:#3a3a3a;--li:#ddd}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+::selection{background:var(--accent);color:#fff}
+svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:25px 46px 0;font-size:16px;line-height:20px}
+.nav-back{display:flex;align-items:center;gap:6px;color:var(--li);transition:opacity .15s}
+.nav-back:hover{opacity:.6}
+.nav-back svg{font-size:18px}
+.nav-date{color:#b5b5b5}
+
+.hero{text-align:center;padding-top:112px}
+.hero h1{margin:0;font-size:72px;line-height:75px;font-weight:700;letter-spacing:-.025em}
+.hero .sub{margin:14px 0 0;font-size:28px;line-height:36px;color:var(--sub);letter-spacing:-.005em}
+.buttons{display:flex;justify-content:center;gap:14px}
+.hero .buttons{margin-top:55px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:53px;border-radius:999px;font-size:15px;font-weight:500;white-space:nowrap;transition:transform .15s}
+.btn:hover{transform:scale(1.03)}
+.btn svg{font-size:20px}
+.btn-download{width:200px;background:var(--btn);color:var(--btnfg)}
+.btn-github{width:195px;border:1.5px solid var(--bd)}
+
+/* Screenshot slot: drop your <img> inside .hero-image */
+.hero-image{margin:48px auto 0;max-width:1300px;padding:0 24px;min-height:0}
+.hero-image img{width:100%;height:auto;display:block}
+
+.purpose{display:flex;margin-top:122px}
+.gallery{width:50%;display:flex;flex-direction:column;background:var(--panel)}
+.slot{position:relative;flex:1 1 0;min-height:260px;background:#fff;overflow:hidden}
+
+.slot::before{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;font-size:14px;color:#8a8a8a}
+.slot svg{position:absolute;inset:0;width:100%;height:100%;display:block;font-family:'Inter',sans-serif}
+
+.info{width:50%;background:var(--panel);padding:73px 60px 73px 100px}
+.label{margin:0;font-size:13px;line-height:16px;font-weight:700;color:#8a8a8a}
+.info h2{margin:14px 0 0;font-size:24px;line-height:30px;font-weight:600;letter-spacing:-.01em}
+.copy{max-width:433px;margin-top:24px}
+.copy p{margin:0 0 20px;font-size:16px;line-height:22px;color:var(--muted)}
+.copy p:last-child{margin-bottom:0}
+.features{list-style:none;margin:50px 0 0;padding:0;max-width:420px}
+.features li{display:flex;align-items:center;height:42px;padding-left:11px;font-size:14px;color:var(--li);border-bottom:1px solid var(--line)}
+.features li:last-child{border-bottom:0}
+.features svg{font-size:26px;margin-right:25px;flex-shrink:0;color:var(--accent)}
+
+.footer{display:flex;align-items:center;justify-content:space-between;max-width:1440px;margin:0 auto;padding:114px 70px 110px 65px}
+.footer-brand{display:flex;align-items:center;gap:20px}
+.logo{width:79px;height:79px;border-radius:18px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.logo svg{font-size:46px}
+.footer-brand span{font-size:30px;line-height:36px;font-weight:500;letter-spacing:-.01em}
+.legal{margin:0;padding:10px 20px;text-align:center;font-size:12px;line-height:16px;color:#b5b5b5;border-top:1px dotted var(--line)}
+
+@media (max-width:1100px){.hero h1{font-size:60px;line-height:64px}.hero .sub{font-size:24px}.info{padding:60px 40px 50px 50px}}
+@media (max-width:768px){
+.nav{padding:20px}
+.hero{padding-top:60px}
+.hero h1{font-size:calc((100vw - 50px)/8.75);line-height:1.02}
+.hero .sub{font-size:17.5px;line-height:22px}
+.hero .buttons{margin-top:40px}
+.buttons{flex-direction:column;align-items:center;gap:8px}
+.btn{height:45px;font-size:14px}.btn svg{font-size:17px}
+.btn-download,.btn-github{width:190px}.btn-github{border-width:1px}
+.hero-image{padding:0;margin-top:32px}
+.purpose{flex-direction:column;margin-top:35px}
+.gallery{width:100%}
+.slot{flex:none;height:calc(100vw*.5625);min-height:0}
+.info{width:100%;padding:42px 32px 40px 29px}
+.info h2{font-size:21px;line-height:26px}
+.copy{max-width:none;margin-top:21px}.copy p{font-size:14px;line-height:20px}
+.features{margin-top:40px;max-width:none}.features li{height:44px;padding-left:8px}.features svg{margin-right:20px}
+.footer{flex-direction:column;padding:60px 25px 80px}
+.footer-brand{flex-direction:column;gap:14px}
+.footer .buttons{margin-top:50px}
+}
+
+.slot+.slot{border-top:1px solid #e2e2e2}
+body,.info,.features li,.copy p,.sub,.gallery{transition:background-color .35s,color .35s,border-color .35s}
+.btn{transition:transform .15s,background-color .35s,color .35s,border-color .35s}
+.theme{position:relative;width:60px;height:32px;border-radius:999px;border:1.5px solid var(--bd);background:var(--panel);padding:0;cursor:pointer;transition:background-color .35s,border-color .35s}
+.theme:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.knob{position:absolute;top:3px;left:3px;width:23px;height:23px;border-radius:50%;background:var(--btn);color:var(--btnfg);display:grid;place-items:center;transition:transform .5s cubic-bezier(.68,-.4,.27,1.4),background-color .35s,color .35s}
+.knob svg{grid-area:1/1;font-size:14px;transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .3s}
+.knob .moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+:root[data-theme="dark"] .knob{transform:translateX(28px)}
+:root[data-theme="dark"] .knob .sun{opacity:0;transform:rotate(90deg) scale(.4)}
+:root[data-theme="dark"] .knob .moon{opacity:1;transform:none}
+.hero-image:empty::before{content:"Your screenshot goes here";display:grid;place-items:center;aspect-ratio:16/10;border:2px dashed var(--bd);border-radius:14px;color:var(--muted);font-size:14px}
+@media (max-width:768px){.hero-image:empty::before{margin:0 20px}}
+.csv .file{animation:fileIn 8s ease infinite}
+.csv .row{animation:rowIn 8s ease infinite both;animation-delay:calc(1.4s + var(--i)*.3s)}
+.csv .bar{transform-box:fill-box;transform-origin:left;animation:barGo 8s ease infinite}
+.csv .ok{animation:okIn 8s ease infinite}
+@keyframes fileIn{0%{transform:translateX(-30px);opacity:0}10%,28%{transform:none;opacity:1}38%,100%{transform:translateX(14px);opacity:0}}
+@keyframes rowIn{0%{opacity:0;transform:translateX(-10px)}6%{opacity:1;transform:none}80%{opacity:1}92%,100%{opacity:0}}
+@keyframes barGo{0%,8%{transform:scaleX(0)}34%,90%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:0}}
+@keyframes okIn{0%,36%{opacity:0}42%,88%{opacity:1}96%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.csv *,.knob,.knob svg{animation:none!important;transition:none!important}}
+.btn-download{position:relative;overflow:hidden;isolation:isolate}
+.nums{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.nums i{position:absolute;font-style:normal;font-weight:600;color:var(--btnfg);opacity:0;transform:translateY(14px) scale(.4)}
+.nums i:nth-child(even){color:#4cc08a}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){.btn-download:hover .nums i{animation:numPop 1.1s cubic-bezier(.34,1.56,.64,1) infinite}}
+@keyframes numPop{0%{opacity:0;transform:translateY(14px) scale(.4)}25%{opacity:.5;transform:translateY(0) scale(1.2)}45%{opacity:.4;transform:scale(1)}80%{opacity:.4}100%{opacity:0;transform:translateY(-10px) scale(.9)}}
+.hero{position:relative;isolation:isolate}
+.strip{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.strip i{position:absolute;left:-25%;top:40px;width:150%;height:240px;opacity:.4;filter:blur(55px);transform:rotate(-9deg);background:linear-gradient(90deg,#02024a,#0a4fd8,#3cc8ff,#f55fc0,#ffb347,#ff5a1f,#f55fc0,#0a4fd8,#02024a);background-size:300% 100%;animation:strip 6s ease-in-out infinite alternate;will-change:transform,background-position}
+.strip i.thin{top:215px;height:16px;filter:blur(6px);opacity:.55;animation-duration:7s;animation-direction:alternate-reverse}
+:root[data-theme="dark"] .strip i:not(.thin){opacity:.5}
+@keyframes strip{from{background-position:0% 0;transform:rotate(-9deg) translateX(-12%) scaleY(.85)}to{background-position:100% 0;transform:rotate(-9deg) translateX(12%) scaleY(1.2)}}
+@media (max-width:768px){.strip i{top:20px;height:180px}.strip i.thin{top:170px}}
+@media (prefers-reduced-motion:reduce){.strip i{animation-duration:24s}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="dl" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></symbol>
+<symbol id="gh" viewBox="0 0 24 24"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.2c0-1 .1-1.5-.5-2.1 2.8-.3 5.5-1.4 5.5-6A4.7 4.7 0 0 0 18.700 6.400 4.400 4.400 0 0 0 18.600 3S17.500 2.700 15 4.400a12 12 0 0 0-6 0C6.500 2.700 5.400 3 5.400 3a4.400 4.400 0 0 0-.1 3.400A4.700 4.700 0 0 0 4 9.700c0 4.600 2.700 5.700 5.500 6-.6.600-.6 1.200-.5 2.100V21"/></symbol>
+<symbol id="grid" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></symbol>
+<symbol id="fx" viewBox="0 0 24 24"><path d="M14 4c-3 0-3 2-3.500 5L9 18c-.5 2.500-1.500 3-3 3M6 11h8M14 15l5 5M19 15l-5 5"/></symbol>
+<symbol id="chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><rect x="8" y="12" width="3" height="5"/><rect x="13" y="8" width="3" height="9"/></symbol>
+<symbol id="pivot" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M10 10v10M14 14l3 3 3-3"/></symbol>
+<symbol id="cond" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 12h18"/><rect x="5" y="6" width="5" height="4" fill="currentColor" stroke="none" opacity=".4"/><rect x="14" y="14" width="5" height="4" fill="currentColor" stroke="none" opacity=".4"/></symbol>
+<symbol id="valid" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="6" rx="1.500"/><path d="M8 15l2.500 2.500L16 13M3 19h4"/></symbol>
+<symbol id="filter" viewBox="0 0 24 24"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></symbol>
+<symbol id="freeze" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 4v16" stroke-width="2.600"/></symbol>
+<symbol id="fill" viewBox="0 0 24 24"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M8 12v8M5 17l3 3 3-3"/><path d="M16 8h4M16 12h4" opacity=".5"/></symbol>
+<symbol id="find" viewBox="0 0 24 24"><circle cx="10.500" cy="10.500" r="6"/><path d="M15 15l5 5"/></symbol>
+<symbol id="import" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6zM14 3v5h5M12 11v6M9.500 14.500L12 17l2.500-2.500"/></symbol>
+<symbol id="name" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11h6M7 14h3"/></symbol>
+<symbol id="note" viewBox="0 0 24 24"><path d="M4 5h16v11H10l-5 4v-4H4z"/></symbol>
+<symbol id="sheets" viewBox="0 0 24 24"><path d="M3 6h14v12H3zM17 9h4v12H7v-3"/></symbol>
+<symbol id="keys" viewBox="0 0 24 24"><rect x="2.500" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></symbol>
+<symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400"/></symbol><symbol id="moon" viewBox="0 0 24 24"><path d="M20 14.500A8 8 0 0 1 9.500 4 8 8 0 1 0 20 14.500z"/></symbol></defs>
+</svg>
+
+<nav class="nav">
+  <button class="theme" id="theme" type="button" aria-label="Toggle dark mode" aria-pressed="false"><span class="knob"><svg class="i sun"><use href="#sun"/></svg><svg class="i moon"><use href="#moon"/></svg></span></button>
+</nav>
+
+<header class="hero">
+  <div class="strip" aria-hidden="true"><i></i><i class="thin"></i></div>
+  <h1>The Excel<br>alternative</h1>
+  <p class="sub">Free, open source, and always yours</p>
+  <div class="buttons">
+    <a class="btn btn-download" href="#"><svg class="i"><use href="#dl"/></svg>Download</a>
+    <a class="btn btn-github" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#gh"/></svg>View on GitHub</a>
+  </div>
+  <div class="hero-image"> <img src="Spreadsheet Pro Productivity Suite.png" alt="Spreadsheet Pro running on a computer"></div>
+
+
+</header>
+
+<section class="purpose">
+  <div class="gallery">
+    <div class="slot"><svg id="pie" viewBox="0 0 600 340" role="img" aria-label="Interactive pie chart of spend by category">
+      <rect width="600" height="340" fill="#fff"/>
+      <text x="40" y="46" font-size="16" font-weight="600" fill="#222">Spend by category</text>
+      <text x="40" y="66" font-size="12" fill="#888">Hover, tap or press a slice</text>
+      <g id="slices" transform="translate(200 195)"></g><g id="legend"></g>
+      <text id="pl" x="370" y="262" font-size="12" fill="#888">Total</text>
+      <text id="pv" x="370" y="294" font-size="28" font-weight="700" fill="#222">$2,485</text>
+    </svg></div>
+    <div class="slot"><svg class="csv" viewBox="0 0 600 340" role="img" aria-label="Importing a CSV file into the sheet">
+      <rect width="600" height="340" fill="#fff"/>
+      <text x="40" y="46" font-size="16" font-weight="600" fill="#222">Import CSV</text>
+      <text x="40" y="66" font-size="12" fill="#888">Drop a file and the rows fill the sheet</text>
+      <g class="file"><path d="M44 110h56l26 26v90H44z" fill="#fff" stroke="#1d6f42" stroke-width="2" stroke-linejoin="round"/><path d="M100 110v26h26" fill="none" stroke="#1d6f42" stroke-width="2" stroke-linejoin="round"/><rect x="56" y="172" width="58" height="24" rx="4" fill="#1d6f42"/><text x="85" y="189" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">CSV</text><text x="85" y="248" font-size="12" fill="#555" text-anchor="middle">sales.csv</text></g>
+      <rect x="40" y="268" width="110" height="6" rx="3" fill="#e2e8e4"/><rect class="bar" x="40" y="268" width="110" height="6" rx="3" fill="#1d6f42"/>
+      <text class="ok" x="40" y="298" font-size="12" font-weight="600" fill="#1d6f42">6 rows imported</text>
+      <rect x="190" y="96" width="380" height="30" fill="#1d6f42"/><g font-size="12" font-weight="600" fill="#fff"><text x="202" y="116">Date</text><text x="292" y="116">Product</text><text x="440" y="116" text-anchor="end">Units</text><text x="558" y="116" text-anchor="end">Revenue</text></g>
+      <g class="row" style="--i:0"><rect x="190" y="126" width="380" height="32" fill="#fff"/><path d="M190 158H570" stroke="#e6e6e6"/><g font-size="12" fill="#333"><text x="202" y="146">2026-01-04</text><text x="292" y="146">Widget</text><text x="440" y="146" text-anchor="end">120</text><text x="558" y="146" text-anchor="end">$2,400</text></g></g><g class="row" style="--i:1"><rect x="190" y="158" width="380" height="32" fill="#f4f8f6"/><path d="M190 190H570" stroke="#e6e6e6"/><g font-size="12" fill="#333"><text x="202" y="178">2026-01-09</text><text x="292" y="178">Gadget</text><text x="440" y="178" text-anchor="end">85</text><text x="558" y="178" text-anchor="end">$3,825</text></g></g><g class="row" style="--i:2"><rect x="190" y="190" width="380" height="32" fill="#fff"/><path d="M190 222H570" stroke="#e6e6e6"/><g font-size="12" fill="#333"><text x="202" y="210">2026-01-15</text><text x="292" y="210">Widget</text><text x="440" y="210" text-anchor="end">140</text><text x="558" y="210" text-anchor="end">$2,800</text></g></g><g class="row" style="--i:3"><rect x="190" y="222" width="380" height="32" fill="#f4f8f6"/><path d="M190 254H570" stroke="#e6e6e6"/><g font-size="12" fill="#333"><text x="202" y="242">2026-01-22</text><text x="292" y="242">Sprocket</text><text x="440" y="242" text-anchor="end">60</text><text x="558" y="242" text-anchor="end">$1,980</text></g></g><g class="row" style="--i:4"><rect x="190" y="254" width="380" height="32" fill="#fff"/><path d="M190 286H570" stroke="#e6e6e6"/><g font-size="12" fill="#333"><text x="202" y="274">2026-01-28</text><text x="292" y="274">Gadget</text><text x="440" y="274" text-anchor="end">95</text><text x="558" y="274" text-anchor="end">$4,275</text></g></g><g class="row" style="--i:5"><rect x="190" y="286" width="380" height="32" fill="#f4f8f6"/><path d="M190 318H570" stroke="#e6e6e6"/><g font-size="12" fill="#333"><text x="202" y="306">2026-02-03</text><text x="292" y="306">Widget</text><text x="440" y="306" text-anchor="end">110</text><text x="558" y="306" text-anchor="end">$2,200</text></g></g>
+    </svg></div>
+    <div class="slot"><svg viewBox="0 0 600 340" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Pivot table with conditional formatting">
+      <rect width="600" height="340" fill="#fff"/>
+      <text x="40" y="46" font-size="16" font-weight="600" fill="#222">Sales by region</text>
+      <rect x="40" y="70" width="520" height="34" fill="#1d6f42"/>
+      <g font-size="12" font-weight="600" fill="#fff" text-anchor="end"><text x="54" y="92" text-anchor="start">Region</text><text x="250" y="92">Q1</text><text x="360" y="92">Q2</text><text x="470" y="92">Q3</text><text x="548" y="92">Total</text></g>
+      <g><rect x="200" y="104" width="55" height="40" fill="#cfe8d9"/><rect x="310" y="104" width="55" height="40" fill="#8ccaa6"/><rect x="420" y="104" width="55" height="40" fill="#4ea97a"/>
+      <rect x="200" y="144" width="55" height="40" fill="#8ccaa6"/><rect x="310" y="144" width="55" height="40" fill="#4ea97a"/><rect x="420" y="144" width="55" height="40" fill="#1d6f42"/>
+      <rect x="200" y="184" width="55" height="40" fill="#f7d9d6"/><rect x="310" y="184" width="55" height="40" fill="#cfe8d9"/><rect x="420" y="184" width="55" height="40" fill="#8ccaa6"/>
+      <rect x="200" y="224" width="55" height="40" fill="#cfe8d9"/><rect x="310" y="224" width="55" height="40" fill="#cfe8d9"/><rect x="420" y="224" width="55" height="40" fill="#8ccaa6"/></g>
+      <g stroke="#e2e2e2"><path d="M40 144H560M40 184H560M40 224H560M40 264H560"/></g>
+      <g font-size="12" fill="#333"><text x="54" y="129">North</text><text x="54" y="169">South</text><text x="54" y="209">East</text><text x="54" y="249">West</text><text x="54" y="289" font-weight="700">Total</text></g>
+      <g font-size="12" fill="#222" text-anchor="end"><text x="250" y="129">12.4k</text><text x="360" y="129">18.1k</text><text x="470" y="129">24.9k</text><text x="548" y="129" font-weight="600">55.4k</text>
+      <text x="250" y="169">19.0k</text><text x="360" y="169">25.2k</text><text x="470" y="169" fill="#fff">31.7k</text><text x="548" y="169" font-weight="600">75.9k</text>
+      <text x="250" y="209">6.1k</text><text x="360" y="209">11.8k</text><text x="470" y="209">17.3k</text><text x="548" y="209" font-weight="600">35.2k</text>
+      <text x="250" y="249">10.7k</text><text x="360" y="249">12.0k</text><text x="470" y="249">18.2k</text><text x="548" y="249" font-weight="600">40.9k</text>
+      <text x="250" y="289" font-weight="700">48.2k</text><text x="360" y="289" font-weight="700">67.1k</text><text x="470" y="289" font-weight="700">92.1k</text><text x="548" y="289" font-weight="700">207.4k</text></g>
+    </svg></div>
+  </div>
+
+  <div class="info">
+    <p class="label">Purpose</p>
+    <h2>All the tools you need for<br>serious spreadsheet work</h2>
+    <div class="copy">
+      <p>Excel costs too much, and lighter tools don’t feel familiar enough to stay in flow. That’s why I built Spreadsheet Pro.</p>
+      <p>The goal was a full-featured spreadsheet app that is completely free and open source. It’s built around the way you actually work with data: formulas, charts, and pivot tables, with the controls you need to get every number right.</p>
+      <p>Because it’s open source, you can download the project and add, remove, or change any feature to fit your needs.</p>
+    </div>
+
+    <ul class="features">
+      <li><svg class="i"><use href="#grid"/></svg>Cells &amp; Ranges</li>
+      <li><svg class="i"><use href="#fx"/></svg>Formulas &amp; Functions</li>
+      <li><svg class="i"><use href="#chart"/></svg>Charts</li>
+      <li><svg class="i"><use href="#pivot"/></svg>Pivot Tables</li>
+      <li><svg class="i"><use href="#cond"/></svg>Conditional Formatting</li>
+      <li><svg class="i"><use href="#valid"/></svg>Data Validation</li>
+      <li><svg class="i"><use href="#filter"/></svg>Filter &amp; Sort</li>
+      <li><svg class="i"><use href="#freeze"/></svg>Freeze Panes</li>
+      <li><svg class="i"><use href="#fill"/></svg>Autofill</li>
+      <li><svg class="i"><use href="#find"/></svg>Find &amp; Replace</li>
+      <li><svg class="i"><use href="#import"/></svg>Import &amp; Export (XLSX, CSV)</li>
+      <li><svg class="i"><use href="#name"/></svg>Named Ranges</li>
+      <li><svg class="i"><use href="#note"/></svg>Comments</li>
+      <li><svg class="i"><use href="#sheets"/></svg>Multiple Sheets</li>
+      <li><svg class="i"><use href="#keys"/></svg>Keyboard Shortcuts</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">
+    <div class="logo"><svg class="i"><use href="#grid"/></svg></div>
+    <span>Spreadsheet Pro</span>
+  </div>
+  <div class="buttons">
+    <a class="btn btn-download" href="#"><svg class="i"><use href="#dl"/></svg>Download</a>
+    <a class="btn btn-github" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#gh"/></svg>View on GitHub</a>
+  </div>
+</footer>
+
+<p class="legal">Excel and Microsoft are trademarks of Microsoft Corporation. Spreadsheet Pro is not affiliated with or endorsed by Microsoft.</p>
+
+<script>
+(function(){
+var root=document.documentElement,mq=matchMedia('(prefers-color-scheme: dark)'),b=document.getElementById('theme');
+function set(t){root.dataset.theme=t;b.setAttribute('aria-pressed',t==='dark')}
+set(mq.matches?'dark':'light');
+b.addEventListener('click',function(){set(root.dataset.theme==='dark'?'light':'dark')});
+
+var NS='http://www.w3.org/2000/svg',D=[['Rent',1200,'#1d6f42'],['Food',430,'#4ea97a'],['Travel',260,'#f2a33a'],['Tools',95,'#6aa3d9'],['Savings',500,'#8e6bbf']],
+T=D.reduce(function(s,d){return s+d[1]},0),sl=[],lg=[],pin=-1,a0=-Math.PI/2,R=105,
+pl=document.getElementById('pl'),pv=document.getElementById('pv'),G=document.getElementById('slices'),L=document.getElementById('legend');
+function el(n,at,p){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);p.appendChild(e);return e}
+function fmt(n){return '$'+n.toLocaleString('en-US')}
+function on(i){
+  sl.forEach(function(s,j){var a=j===i;s.style.transform=a?'translate('+s._m[0]+'px,'+s._m[1]+'px)':'none';s.style.opacity=(i<0||a)?1:.4;lg[j].setAttribute('font-weight',a?700:400)});
+  pl.textContent=i<0?'Total':D[i][0];pv.textContent=fmt(i<0?T:D[i][1]);
+}
+D.forEach(function(d,i){
+  var a1=a0+d[1]/T*2*Math.PI,m=(a0+a1)/2,x1=Math.cos(a0)*R,y1=Math.sin(a0)*R,x2=Math.cos(a1)*R,y2=Math.sin(a1)*R;
+  var s=el('path',{d:'M0 0L'+x1+' '+y1+'A'+R+' '+R+' 0 '+(a1-a0>Math.PI?1:0)+' 1 '+x2+' '+y2+'Z',fill:d[2],stroke:'#fff','stroke-width':2,tabindex:0,role:'button','aria-label':d[0]+' '+fmt(d[1])},G);
+  s.style.cssText='cursor:pointer;outline:none;transition:transform .25s ease,opacity .25s ease';
+  s._m=[Math.cos(m)*12,Math.sin(m)*12];
+  var g=el('g',{transform:'translate(370 '+(112+i*30)+')',tabindex:0},L);g.style.cursor='pointer';g.style.outline='none';
+  el('rect',{width:12,height:12,rx:3,fill:d[2]},g);
+  var t=el('text',{x:22,y:11,'font-size':13,fill:'#333'},g);t.textContent=d[0];
+  var v=el('text',{x:190,y:11,'font-size':13,fill:'#777','text-anchor':'end'},g);v.textContent=Math.round(d[1]/T*100)+'%';
+  sl.push(s);lg.push(t);
+  [s,g].forEach(function(n){
+    n.addEventListener('mouseenter',function(){on(i)});n.addEventListener('focus',function(){on(i)});
+    n.addEventListener('mouseleave',function(){on(pin)});n.addEventListener('blur',function(){on(pin)});
+    n.addEventListener('click',function(){pin=pin===i?-1:i;on(pin)});
+    n.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pin=pin===i?-1:i;on(pin)}});
+  });
+  a0=a1;
+});
+})();
+</script>
+<script>
+document.querySelectorAll('.btn-download').forEach(function(b){
+  var v=['42','7,300','=SUM','3.14','$980','12%','256','0.5','1,024','99','=A1','18k','64','5.2','$4.2k','=AVG'],w=document.createElement('span');
+  w.className='nums';w.setAttribute('aria-hidden','true');
+  v.forEach(function(t,i){var s=document.createElement('i');s.textContent=t;
+    s.style.left=(4+(i%8)*12+Math.random()*4)+'%';s.style.top=(10+Math.floor(i/8)*42+Math.random()*14)+'%';
+    s.style.fontSize=(10+Math.random()*6)+'px';s.style.animationDelay=(Math.random()*.7)+'s';w.appendChild(s)});
+  b.insertBefore(w,b.firstChild);
+});
+</script>
+</body>
+</html>
