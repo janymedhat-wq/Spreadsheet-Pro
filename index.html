@@ -216,6 +216,18 @@ body,.info,.features li,.copy p,.sub,.gallery{transition:background-color .35s,c
 .st b{display:block;font-size:48px;line-height:56px;font-weight:700;letter-spacing:-.02em;background:linear-gradient(90deg,#0a4fd8,#f55fc0,#ffb347);-webkit-background-clip:text;background-clip:text;color:transparent}
 .st span{color:var(--sub);font-size:14px}
 @media (max-width:700px){.stats{grid-template-columns:1fr 1fr;margin-top:60px}.st b{font-size:36px}}
+
+svg.os{fill:currentColor;stroke:none}
+.btn-download{width:auto;min-width:200px;padding:0 26px}
+.os-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--sub);animation:rise .8s .95s cubic-bezier(.2,.8,.2,1) both}
+.os-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--bd);font-size:14px;font-weight:500;color:var(--fg);white-space:nowrap;transition:transform .15s,border-color .2s,color .2s,background-color .35s}
+.os-btn svg{font-size:17px}
+.os-btn:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--accent)}
+.os-btn.cur{border-color:var(--accent)}
+.os-btn.soon{opacity:.6}
+.os-btn.soon::after{content:"Soon";font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--panel);color:var(--sub)}
+.footer .buttons{flex-wrap:wrap;justify-content:flex-end;max-width:640px}
+@media (max-width:768px){.btn-download{min-width:190px}.footer .buttons{justify-content:center}.footer .os-btn{width:190px;justify-content:center}}
 </style>
 </head>
 <body>
@@ -248,6 +260,9 @@ body,.info,.features li,.copy p,.sub,.gallery{transition:background-color .35s,c
 <symbol id="code" viewBox="0 0 24 24"><path d="M9 8l-5 4 5 4M15 8l5 4-5 4M13 6l-2 12"/></symbol>
 <symbol id="big" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h10M18 16v5M16 19l2 2 2-2"/></symbol>
 <symbol id="tech" viewBox="0 0 24 24"><path d="M5 10h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4zM16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3c0 1.5 2 1.500 2 3M12 3c0 1.5 2 1.5 2 3"/></symbol>
+<symbol id="os-win" viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></symbol>
+<symbol id="os-mac" viewBox="0 0 24 24"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z"/></symbol>
+<symbol id="os-linux" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2c-2.2 0-3.6 1.8-3.6 4.2 0 1.2.3 2.1.8 3C7.700 11 6.500 13.500 6.500 16c0 1.200.3 2 .8 2.600-.9.4-1.900 1.100-1.900 2 0 1 1.700 1.400 3.300 1.400 1.200 0 2-.2 2.700-.7.700.5 1.500.7 2.700.7 1.600 0 3.300-.4 3.300-1.400 0-.9-1-1.600-1.900-2 .5-.6.8-1.400.8-2.600 0-2.500-1.200-5-2.700-6.800.5-.9.8-1.800.8-3C15.600 3.800 14.200 2 12 2zM12 11.500c-1.800 0-3 2-3 4.300 0 1.700.9 3.200 3 3.200s3-1.500 3-3.200c0-2.300-1.200-4.300-3-4.300zM10.600 5.200a.6.6 0 1 0 1.200 0 .6.6 0 1 0-1.200 0zM12.400 5.200a.6.6 0 1 0 1.200 0 .6.6 0 1 0-1.200 0z"/></symbol>
 </defs>
 </svg>
 
@@ -260,9 +275,10 @@ body,.info,.features li,.copy p,.sub,.gallery{transition:background-color .35s,c
   <h1>Your data.<br>Your workflow.<br>Your spreadsheet.</h1>
   <p class="sub">A full Excel-style spreadsheet in pure Java: formulas, pivot tables, charts, macros and encryption. Free, open source, and always yours.</p>
   <div class="buttons">
-    <a class="btn btn-download" href="https://github.com/nexcartpos-alt/spreadsheet-pro/releases/download/v1.0/SpreadsheetPro-Windows.zip"><svg class="i"><use href="#dl"/></svg>Download</a>
-    <a class="btn btn-github" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#gh"/></svg>View on GitHub</a>
+    <a class="btn btn-download" data-os="auto" href="#"><svg class="i"><use href="#dl"/></svg><span class="dl-t">Download</span></a>
+    <a class="btn btn-github" href="https://github.com/nexcartpos-alt/spreadsheet-pro" target="_blank" rel="noopener"><svg class="i"><use href="#gh"/></svg>View on GitHub</a>
   </div>
+  <div class="os-row" aria-label="Download for your system"><span>Download for</span><a class="os-btn" data-os="win" href="#"><svg class="i os"><use href="#os-win"/></svg>Windows</a><a class="os-btn" data-os="mac" href="#"><svg class="i os"><use href="#os-mac"/></svg>macOS</a><a class="os-btn" data-os="linux" href="#"><svg class="i os"><use href="#os-linux"/></svg>Linux</a></div>
   <div class="hero-image">
 <div class="demo" role="group" aria-label="Interactive product preview">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -459,8 +475,8 @@ body,.info,.features li,.copy p,.sub,.gallery{transition:background-color .35s,c
     <span>Spreadsheet Pro</span>
   </div>
   <div class="buttons">
-    <a class="btn btn-download" href="#"><svg class="i"><use href="#dl"/></svg>Download</a>
-    <a class="btn btn-github" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#gh"/></svg>View on GitHub</a>
+    <a class="os-btn" data-os="win" href="#"><svg class="i os"><use href="#os-win"/></svg>Windows</a><a class="os-btn" data-os="mac" href="#"><svg class="i os"><use href="#os-mac"/></svg>macOS</a><a class="os-btn" data-os="linux" href="#"><svg class="i os"><use href="#os-linux"/></svg>Linux</a>
+    <a class="btn btn-github" href="https://github.com/nexcartpos-alt/spreadsheet-pro" target="_blank" rel="noopener"><svg class="i"><use href="#gh"/></svg>View on GitHub</a>
   </div>
 </footer>
 
@@ -616,6 +632,26 @@ var sio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isInt
 [].forEach.call(document.querySelectorAll('.st b'),function(b){sio.observe(b)});
 var rio=new IntersectionObserver(function(es){es.forEach(function(e,i){if(e.isIntersecting){e.target.style.setProperty('--rd',i*.1+'s');e.target.classList.add('in');rio.unobserve(e.target)}})},{threshold:.12});
 [].forEach.call(document.querySelectorAll('.st'),function(n){n.classList.add('rv');rio.observe(n)});
+})();
+</script>
+<script>
+/* ===== DOWNLOAD LINKS: paste your Mac and Linux links between the quotes ===== */
+var LINKS={
+  win:'https://github.com/nexcartpos-alt/spreadsheet-pro/releases/download/v1.0/SpreadsheetPro-Windows.zip',
+  mac:'https://github.com/nexcartpos-alt/spreadsheet-pro/releases/download/v1.0/SpreadsheetPro-macOS.zip',
+  linux:'https://github.com/nexcartpos-alt/spreadsheet-pro/releases/download/v1.0/SpreadsheetPro-Linux.tar.gz'
+};
+(function(){
+var s=((navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform||'')+' '+(navigator.userAgent||''),
+    os=/iPhone|iPad|Android/i.test(s)?'win':/Windows|Win32|Win64/i.test(s)?'win':/Mac/i.test(s)?'mac':/Linux|X11|CrOS/i.test(s)?'linux':'win',
+    NAMES={win:'Windows',mac:'macOS',linux:'Linux'};
+[].forEach.call(document.querySelectorAll('[data-os]'),function(a){
+  var auto=a.dataset.os==='auto',k=auto?os:a.dataset.os,url=LINKS[k];
+  if(auto){if(!url){k='win';url=LINKS.win}a.querySelector('.dl-t').textContent='Download for '+NAMES[k]}
+  if(url){a.href=url}
+  else{a.classList.add('soon');a.href='#';a.title='Coming soon';a.addEventListener('click',function(e){e.preventDefault()})}
+  if(!auto&&k===os)a.classList.add('cur');
+});
 })();
 </script>
 </body>
